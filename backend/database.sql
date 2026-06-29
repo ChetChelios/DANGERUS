@@ -3,7 +3,7 @@
 -- Script de creación de base de datos (PostgreSQL)
 -- ============================================================
 -- Cómo usar: ver el manual de instalación. En resumen:
---   psql -U postgres -f database.sql
+--   psql -U postgres -f database.sql hjfghnrf
 -- ============================================================
 
 -- Crear la base de datos (ejecutar este bloque conectado a "postgres")
