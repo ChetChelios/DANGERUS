@@ -4,6 +4,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRelojEnVivo } from '../hooks/useRelojEnVivo';
+import { useAuth } from '../context/AuthContext';
 import * as turnoApi from '../api/turnoApi';
 import Boton from './Boton';
 import Modal from './Modal';
@@ -46,7 +47,9 @@ const IconCheckOut = () => (
   </svg>
 );
 
-export default function PanelControlTurno() {
+
+export default function PanelControlTurno({ onEventoRegistrado } = {}) {
+  const { usuario } = useAuth();
   const ahora = useRelojEnVivo();
 
   const [estado, setEstado] = useState(null);
@@ -79,6 +82,7 @@ export default function PanelControlTurno() {
       setEventoQuePideModal(null);
       setMostrarConfirmacionSalida(false);
       await cargarEstado();
+      if (onEventoRegistrado) onEventoRegistrado();
     } catch (err) {
       const mensaje = err.response?.data?.error || 'Ocurrió un error al registrar el evento.';
       if (eventoQuePideModal) setErrorModal(mensaje);
@@ -168,8 +172,8 @@ export default function PanelControlTurno() {
                 style={{ backgroundImage: 'radial-gradient(circle at 30% 60%, #5DC4A8 0%, transparent 60%)' }}
               />
               <div className="absolute bottom-0 left-0 right-0 p-3">
-                <p className="text-dangerus-200 text-[10px] font-semibold uppercase tracking-wider">Sede del turno</p>
-                <p className="text-white text-sm font-bold mt-0.5">Oficina Principal</p>
+                <p className="text-dangerus-200 text-[10px] font-semibold uppercase tracking-wider">Campaña</p>
+                <p className="text-white text-sm font-bold mt-0.5">{usuario?.campana_nombre || 'Sin asignar'}</p>
               </div>
             </div>
           </div>

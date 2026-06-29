@@ -12,6 +12,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [recordar, setRecordar] = useState(false);
+  const [mostrarModalPassword, setMostrarModalPassword] = useState(false);
 
   const { iniciarSesion, cargando } = useAuth();
   const navegar = useNavigate();
@@ -23,9 +24,7 @@ export default function Login() {
       await iniciarSesion(cedula, password);
       navegar('/dashboard');
     } catch (err) {
-      setError(
-        err.response?.data?.error || 'No fue posible iniciar sesión.'
-      );
+      setError(err.response?.data?.error || 'No fue posible iniciar sesión.');
     }
   }
 
@@ -47,24 +46,18 @@ export default function Login() {
 
         {/* Formulario central */}
         <div className="max-w-sm w-full mx-auto">
-          <h1 className="font-display text-3xl font-bold text-carbon-900 mb-1">
-            Portal de Acceso
-          </h1>
-          <p className="text-carbon-400 text-sm mb-8">
-            Sistema de Gestión de Turnos Institucional
-          </p>
+          <h1 className="font-display text-3xl font-bold text-carbon-900 mb-1">Portal de Acceso</h1>
+          <p className="text-carbon-400 text-sm mb-8">Sistema de Gestión de Turnos Institucional</p>
 
           <form onSubmit={manejarSubmit} className="space-y-5">
 
             {/* Cédula */}
             <div>
-              <label className="block text-sm font-medium text-carbon-700 mb-1.5">
-                Cédula
-              </label>
+              <label className="block text-sm font-medium text-carbon-700 mb-1.5">Cédula</label>
               <div className="relative">
                 <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-carbon-300">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
                   </svg>
                 </span>
                 <input
@@ -80,10 +73,12 @@ export default function Login() {
             {/* Contraseña */}
             <div>
               <div className="flex justify-between items-center mb-1.5">
-                <label className="text-sm font-medium text-carbon-700">
-                  Contraseña
-                </label>
-                <button type="button" className="text-xs text-dangerus-500 hover:text-dangerus-600 transition-colors">
+                <label className="text-sm font-medium text-carbon-700">Contraseña</label>
+                <button
+                  type="button"
+                  onClick={() => setMostrarModalPassword(true)}
+                  className="text-xs text-dangerus-500 hover:text-dangerus-600 transition-colors"
+                >
                   ¿Olvidaste tu contraseña?
                 </button>
               </div>
@@ -140,38 +135,23 @@ export default function Login() {
           </form>
         </div>
 
-        {/* Footer */}
-        <p className="text-xs text-carbon-300">
-          © 2026 DGUS · Sistema Inteligente de Gestión de Turnos
-        </p>
+        <p className="text-xs text-carbon-300">© 2026 DGUS · Sistema Inteligente de Gestión de Turnos</p>
       </div>
 
-      {/* ── Panel derecho: fondo oscuro con imagen y tarjeta de stats ── */}
+      {/* ── Panel derecho ── */}
       <div
         className="hidden lg:flex flex-1 relative items-end justify-end p-10"
-        style={{
-          background: 'linear-gradient(135deg, #0B2620 0%, #103A33 40%, #1B1B18 100%)',
-        }}
+        style={{ background: 'linear-gradient(135deg, #0B2620 0%, #103A33 40%, #1B1B18 100%)' }}
       >
-        {/* Overlay de textura sutil */}
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: `radial-gradient(circle at 25% 35%, #2D8B6B 0%, transparent 50%),
-                              radial-gradient(circle at 80% 70%, #1B6B4F 0%, transparent 40%)`,
-          }}
-        />
-
-        {/* Tarjeta de stats */}
-        <div
-          className="relative z-10 w-full max-w-xs rounded-2xl p-6"
-          style={{
-            background: 'rgba(255,255,255,0.07)',
-            backdropFilter: 'blur(16px)',
-            border: '1px solid rgba(255,255,255,0.12)',
-          }}
-        >
-          {/* Header tarjeta */}
+        <div className="absolute inset-0 opacity-10" style={{
+          backgroundImage: `radial-gradient(circle at 25% 35%, #2D8B6B 0%, transparent 50%),
+                            radial-gradient(circle at 80% 70%, #1B6B4F 0%, transparent 40%)`,
+        }} />
+        <div className="relative z-10 w-full max-w-xs rounded-2xl p-6" style={{
+          background: 'rgba(255,255,255,0.07)',
+          backdropFilter: 'blur(16px)',
+          border: '1px solid rgba(255,255,255,0.12)',
+        }}>
           <div className="flex items-center gap-3 mb-4">
             <div className="w-8 h-8 rounded-lg bg-dangerus-500/80 flex items-center justify-center">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -183,12 +163,9 @@ export default function Login() {
               <p className="text-dangerus-300 text-xs">Cifrado AES-256</p>
             </div>
           </div>
-
           <p className="text-white/70 text-sm leading-relaxed mb-5">
             Tecnología de nivel enterprise para mantener los datos de tu organización seguros, disponibles y auditables.
           </p>
-
-          {/* Stats */}
           <div className="flex gap-6 pt-4" style={{ borderTop: '1px solid rgba(255,255,255,0.1)' }}>
             <div>
               <p className="text-white text-2xl font-bold font-display">99.9%</p>
@@ -200,16 +177,37 @@ export default function Login() {
             </div>
           </div>
         </div>
-
-        {/* Texto inferior derecha */}
-        <p
-          className="absolute bottom-6 right-10 text-xs tracking-widest uppercase"
-          style={{ color: 'rgba(255,255,255,0.25)' }}
-        >
+        <p className="absolute bottom-6 right-10 text-xs tracking-widest uppercase" style={{ color: 'rgba(255,255,255,0.25)' }}>
           Protocolos de Seguridad Activos
         </p>
       </div>
 
+      {/* Modal: Olvidé mi contraseña */}
+      {mostrarModalPassword && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-sm mx-4 p-6">
+            <div className="w-12 h-12 rounded-full bg-dangerus-50 flex items-center justify-center mx-auto mb-4">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2D8B6B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+            </div>
+            <h2 className="font-display font-bold text-carbon-900 text-lg text-center mb-2">
+              Recuperar contraseña
+            </h2>
+            <p className="text-sm text-carbon-500 text-center leading-relaxed mb-6">
+              Por el momento, el restablecimiento de contraseñas debe gestionarse directamente con tu <strong className="text-carbon-700">administrador del sistema</strong>.
+              <br /><br />
+              Comunícate con el área de soporte interno para que puedan asignarte una nueva contraseña temporal.
+            </p>
+            <button
+              onClick={() => setMostrarModalPassword(false)}
+              className="w-full py-2.5 rounded-xl bg-dangerus-500 text-white text-sm font-semibold hover:bg-dangerus-600 transition-colors"
+            >
+              Entendido
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

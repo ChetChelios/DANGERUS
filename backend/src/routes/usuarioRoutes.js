@@ -11,5 +11,7 @@ router.use(requiereAutenticacion, requiereAdmin);
 
 router.get('/', usuarioController.listar);
 router.post('/', usuarioController.crear);
+router.put('/:id', usuarioController.actualizar);
+router.delete('/:id', usuarioController.eliminar);
 
 module.exports = router;

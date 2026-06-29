@@ -19,4 +19,7 @@ router.post('/usuario/:usuarioId', requiereAdmin, mallaController.guardarMallaDe
 // Carga masiva de horarios desde archivo Excel (solo admin)
 router.post('/cargar-excel', requiereAdmin, mallaController.cargarMallasExcel);
 
+// Descargar plantilla Excel vacía (solo admin)
+router.get('/descargar-plantilla', requiereAdmin, mallaController.descargarPlantilla);
+
 module.exports = router;
