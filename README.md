@@ -74,15 +74,6 @@ npm install
 npm run dev              # http://localhost:5173
 ```
 
-## Credenciales iniciales
-
-| Campo       | Valor          |
-|-------------|----------------|
-| Cédula      | `0000000000`   |
-| Contraseña  | `Admin123!`    |
-
-Cámbiala después de tu primer ingreso.
-
 ## Diseño visual
 
 Paleta corporativa (amarillo / gris / blanco) implementada como:
