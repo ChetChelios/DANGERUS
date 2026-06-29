@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  @apply bg-carbon-50 text-carbon-800 font-sans antialiased;
+}
+
+/* Foco visible para accesibilidad de teclado */
+:focus-visible {
+  outline: 2px solid theme('colors.ambar.500');
+  outline-offset: 2px;
+}
+
+/* Respeta la preferencia de "menos movimiento" del usuario */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
