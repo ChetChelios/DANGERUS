@@ -56,37 +56,18 @@ export function AuthProvider({ children }) {
   }, []);
 
   /**
-   * Cierra sesión con confirmación opcional
-   * @param {boolean} conConfirmacion - Si true, pide confirmación antes
+   * Cierra sesión inmediatamente.
+   * BUG 3 FIX: Se eliminó el window.confirm() interno que ignoraba los modales
+   * personalizados y cerraba la sesión aunque el usuario cancelara.
+   * La confirmación debe manejarse en cada componente con el Modal.
    */
-  const cerrarSesion = useCallback((conConfirmacion = true) => {
-    const procederLogout = () => {
-      localStorage.removeItem('dgus_token');
-      localStorage.removeItem('dgus_usuario');
-      localStorage.removeItem('dgus_login_fecha');
-      setToken(null);
-      setUsuario(null);
-      setError(null);
-    };
-
-    if (conConfirmacion) {
-      // Si pide confirmación, retorna una promesa
-      return new Promise((resolve) => {
-        const confirmar = window.confirm(
-          '¿Estás seguro de que deseas terminar tu turno y cerrar sesión?'
-        );
-        if (confirmar) {
-          procederLogout();
-          resolve(true);
-        } else {
-          resolve(false);
-        }
-      });
-    } else {
-      // Sin confirmación, logout inmediato
-      procederLogout();
-      return Promise.resolve(true);
-    }
+  const cerrarSesion = useCallback(() => {
+    localStorage.removeItem('dgus_token');
+    localStorage.removeItem('dgus_usuario');
+    localStorage.removeItem('dgus_login_fecha');
+    setToken(null);
+    setUsuario(null);
+    setError(null);
   }, []);
 
   /**

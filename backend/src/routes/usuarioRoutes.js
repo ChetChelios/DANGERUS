@@ -1,17 +1,16 @@
-// ============================================================
-// Rutas: /api/usuarios
-// ============================================================
-
 const express = require('express');
 const router = express.Router();
-const usuarioController = require('../controllers/usuarioController');
+const c = require('../controllers/usuarioController');
 const { requiereAutenticacion, requiereAdmin } = require('../middleware/authMiddleware');
 
-router.use(requiereAutenticacion, requiereAdmin);
+// Campañas: autenticado (cualquier rol), para cargar el selector del formulario
+router.get('/campanas', requiereAutenticacion, c.listarCampanas);
 
-router.get('/', usuarioController.listar);
-router.post('/', usuarioController.crear);
-router.put('/:id', usuarioController.actualizar);
-router.delete('/:id', usuarioController.eliminar);
+// Resto de rutas de usuarios: requiere autenticación + rol administrador
+router.use(requiereAutenticacion, requiereAdmin);
+router.get('/', c.listar);
+router.post('/', c.crear);
+router.put('/:id', c.actualizar);
+router.get('/exportar', c.exportarExcel);
 
 module.exports = router;

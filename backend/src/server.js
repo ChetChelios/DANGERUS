@@ -17,6 +17,7 @@ const turnoRoutes = require('./routes/turnoRoutes');
 const mallaRoutes = require('./routes/mallaRoutes');
 const usuarioRoutes = require('./routes/usuarioRoutes');
 const reporteRoutes = require('./routes/reporteRoutes');
+const solicitudRoutes = require('./routes/solicitudRoutes');
 
 const app = express();
 
@@ -52,6 +53,7 @@ app.use('/api/turnos', turnoRoutes);
 app.use('/api/mallas', mallaRoutes);
 app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/reportes', reporteRoutes);
+app.use('/api/solicitudes', solicitudRoutes);
 
 // =======================
 // 404
